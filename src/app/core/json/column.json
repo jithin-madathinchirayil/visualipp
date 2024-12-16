@@ -1,0 +1,152 @@
+{
+    "name": "column",
+    "type": "column",
+    "label": "column",
+    "styleProps": [
+        {"name":"dimensions","label": "Dimensions","type": "group", "items": [
+            {"name": "width", "label": "Width", "type": "combo-number","default":100},
+            {"name": "height", "label": "Height", "type": "combo-number","default":100},
+            {"name": "autoWidth", "label": "Auto Width", "type": "toggle","default":false},
+            {"name": "autoHeight", "label": "Auto Height", "type": "toggle","default":false},
+            {"name": "widthUnit", "label": "Unit","parent":"width", "type": "select","default":"%","options":[
+                {"label": "%", "value": "%"},
+                {"label": "px", "value": "px"}
+            ]},
+            {"name": "heightUnit", "label": "Unit","parent":"height", "type": "select","default": "%","options":[
+                {"label": "%", "value": "%"},
+                {"label": "px", "value": "px"}
+            ]},
+            {"name": "margin", "label": "Margin", "type": "box-margin","default":0,"items":[
+                {"name": "top", "label": "Top", "type": "number","default":0},
+                {"name": "right", "label": "Right", "type": "number","default":0},
+                {"name": "bottom", "label": "Bottom", "type": "number","default":0},
+                {"name": "left", "label": "Left", "type": "number","default":0}
+            ]},
+            {"name": "marginUnit", "label": "Margin unit","parent":"margin", "type": "select","default": "%","options":[
+                {"label": "%", "value": "%"},
+                {"label": "px", "value": "px"}
+            ]},
+            {"name": "padding", "label": "Padding", "type": "box-padding","default":0,"items":[
+                {"name": "top", "label": "Top", "type": "number","default":0},
+                {"name": "right", "label": "Right", "type": "number","default":0},
+                {"name": "bottom", "label": "Bottom", "type": "number","default":0},
+                {"name": "left", "label": "Left", "type": "number","default":0}
+            ]},
+            {"name": "paddingUnit", "label": "Padding unit", "parent":"padding","type": "select","default": "%","options":[
+                {"label": "%", "value": "%"},
+                {"label": "px", "value": "px"}
+            ]}
+        ]},
+        {"name":"background","label": "Background","type": "group", "items": [
+            {"name": "color", "label": "Color", "type": "color","default":"#ffffff"},
+            {"name": "image", "label": "Image", "type": "image","default":""},
+            {"name": "size", "label": "Size", "type": "select","default":"cover","options":[
+                {"label": "Cover", "value": "cover"},
+                {"label": "Contain", "value": "contain"},
+                {"label": "Auto", "value": "auto"}
+            ]},
+            {"name": "repeat", "label": "Repeat", "type": "select","default":"no-repeat","options":[
+                {"label": "No Repeat", "value": "no-repeat"},
+                {"label": "Repeat", "value": "repeat"},
+                {"label": "Repeat X", "value": "repeat-x"},
+                {"label": "Repeat Y", "value": "repeat-y"}
+            ]},
+            {"name": "position", "label": "Position", "type": "select","default":"center","options":[
+                {"label": "Center", "value": "center"},
+                {"label": "Top", "value": "top"},
+                {"label": "Bottom", "value": "bottom"},
+                {"label": "Left", "value": "left"},
+                {"label": "Right", "value": "right"}
+            ]}
+        ]},
+        {"name": "typography", "label": "Typography", "type": "group", "items":[
+            {"name": "fontFamily", "label": "Font Family", "type": "select", "default": "sanserif", "options":[
+                {"label": "Sans Serif", "value": "sanserif"},
+                {"label": "Serif", "value": "serif"},
+                {"label": "Monospace", "value": "monospace"},
+                {"label": "Script", "value": "script"},
+                {"label": "Display", "value": "display"}
+            ]},
+            {"name": "fontSize", "label": "Font Size", "type": "number", "default": 16},
+            {"name": "fontSizeUnit", "label": "Font Size Unit", "type": "text", "default": "px", "options":[
+                {"label": "rem", "value": "rem"},
+                {"label": "px", "value": "px"}
+            ]},
+            {"name": "fontWeight", "label": "Font Weight", "type": "select", "default": "normal", "options":[
+                {"label": "Normal", "value": "normal"},
+                {"label": "Bold", "value": "bold"},
+                {"label": "Bolder", "value": "bolder"},
+                {"label": "Lighter", "value": "lighter"}
+            ]},
+            {"name": "color", "label": "Color", "type": "color", "default": "#000000"},
+            {"name": "textDecoration", "label": "Text Decoration", "type": "select", "default": "none", "options":[
+                {"label": "None", "value": "none"},
+                {"label": "Underline", "value": "underline"},
+                {"label": "Overline", "value": "overline"},
+                {"label": "Line Through", "value": "line-through"}
+            ]},
+            {"name": "lineHeight", "label": "Line Height", "type": "number", "default": 1.5},
+            {"name": "lineHeightUnit", "label": "Line Height Unit", "type": "select", "default": "em", "options":[
+                {"label": "em", "value": "em"},
+                {"label": "rem", "value": "rem"},
+                {"label": "px", "value": "px"}
+            ]},
+            {"name": "letterSpacing", "label": "Letter Spacing", "type": "number", "default": 0},
+            {"name": "textTransform", "label": "Text Transform", "type": "select", "default": "none", "options":[
+                {"label": "None", "value": "none"},
+                {"label": "Capitalize", "value": "capitalize"},
+                {"label": "Uppercase", "value": "uppercase"},
+                {"label": "Lowercase", "value": "lowercase"}
+            ]}
+        ]},
+        {"name": "display", "label": "Display", "type": "group", "items":[
+            {"name": "display", "label": "Display", "type": "select", "default": "block", "options":[
+                {"label": "Block", "value": "block"},
+                {"label": "Inline", "value": "inline"},
+                {"label": "Inline Block", "value": "inline-block"},
+                {"label": "Flex", "value": "flex"},
+                {"label": "Inline Flex", "value": "inline-flex"},
+                {"label": "Grid", "value": "grid"},
+                {"label": "Inline Grid", "value": "inline-grid"}
+            ]},
+            {"name": "position", "label": "Position", "type": "select", "default": "static", "options":[
+                {"label": "Static", "value": "static"},
+                {"label": "Relative", "value": "relative"},
+                {"label": "Absolute", "value": "absolute"},
+                {"label": "Fixed", "value": "fixed"},
+                {"label": "Sticky", "value": "sticky"}
+            ]},
+            {"name": "float", "label": "Float", "type": "select", "default": "none", "options":[
+                {"label": "None", "value": "none"},
+                {"label": "Left", "value": "left"},
+                {"label": "Right", "value": "right"}
+            ]},
+            {"name": "clear", "label": "Clear", "type": "select", "default": "none", "options":[
+                {"label": "None", "value": "none"},
+                {"label": "Left", "value": "left"},
+                {"label": "Right", "value": "right"},
+                {"label": "Both", "value": "both"}
+            ]},
+            {"name": "overflow", "label": "Overflow", "type": "select", "default": "visible", "options":[
+                {"label": "Visible", "value": "visible"},
+                {"label": "Hidden", "value": "hidden"},
+                {"label": "Scroll", "value": "scroll"},
+                {"label": "Auto", "value": "auto"}
+            ]},
+            {"name": "zIndex", "label": "Z Index", "type": "number", "default": 0}
+        ]},
+        {"name": "flex", "label": "Flex", "type":"group", "items":[
+            {"name":"flexDirection","label":"Flex Direction","type":"button-group","default":"row","options":[
+                {"label":"Row","value":"row"},
+                {"label":"Column","value":"column"},
+                {"label":"Row Reverse","value":"row-reverse"},
+                {"label":"Column Reverse","value":"column-reverse"}
+            ]},
+            {"name":"flexWrap","label":"Flex Wrap","type":"button-group","default":"nowrap", "options":[
+                {"label":"No Wrap","value":"nowrap"},
+                {"label":"Wrap","value":"wrap"},
+                {"label":"Wrap Reverse","value":"wrap-reverse"}
+            ]}
+        ]}
+    ]
+}

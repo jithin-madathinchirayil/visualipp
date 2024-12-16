@@ -1,0 +1,169 @@
+@if(enableView) {
+    <mat-accordion class="w-full">
+        @for (item of selectedSchema()?.styleProps; track $index) {
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>{{item.label}}</mat-expansion-panel-header>
+                <div class="w-full h-auto grid grid-cols-4 p-2 gap-2 bg-white">
+                    @for (child of item.items; track $index) {
+                        @if(!child.parent) {
+                            @switch (child.type) {
+                                @case ('combo-number') { <ng-container [ngTemplateOutlet]="comboNumber" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
+                                @case ('box-margin') { <ng-container [ngTemplateOutlet]="boxMargin" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
+                                @case ('box-padding') { <ng-container [ngTemplateOutlet]="boxPadding" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
+                                @case ('toggle') { <ng-container [ngTemplateOutlet]="toggle" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
+                                @case ('combination-radio') { <ng-container [ngTemplateOutlet]="combinationRadio" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
+                            }
+                        } 
+                    }
+                </div>
+            </mat-expansion-panel>
+        }
+    </mat-accordion>
+}
+
+
+<ng-template #comboNumber let-data>
+    <div [formGroup]="form" class="w-full h-auto flex flex-wrap text-xs col-span-2 gap-0.5">
+        <div class="w-full flex items-center justify-between">
+            <span>{{data.parent.label}}</span>
+            <span>{{data.child.label}}</span>
+        </div>
+        <div class="w-full h-auto flex items-center border">
+            <input type="number" formControlName="{{data.parent.name}}" class="w-full h-6 focus:outline-none px-1 appearance-none">
+            <select [name]="data.child.name" [id]="data.child.label" formControlName="{{data.child.name}}" class="w-6 h-6 focus:outline-none shrink-0 appearance-none text-center cursor-pointer">
+                @for (item of data.child.options; track $index) {
+                    <option [value]="item.value">{{item.label}}</option>
+                }
+            </select>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #boxMargin let-data>
+    <div [formGroup]="form" class="w-full col-span-4 flex flex-wrap text-xs gap-1">
+        <div class="w-full flex items-center justify-between">
+            <span>{{data.parent.label}}</span>
+            <div class="w-auto h-auto flex items-center">
+                @for (item of data.child.options; track $index) {
+                    <div class="w-7 h-6 border first:rounded-l-md last:rounded-r-md last: border-l-0 overflow-hidden relative cursor-pointer">
+                        <input formControlName="{{data.child.name}}" type="radio" [name]="data.child.name" [id]="data.child.name" [value]="item.value" class="w-full h-full cursor-pointer checked:bg-primary-default appearance-none transition-all duration-200 peer">
+                        <div class="w-full h-full absolute top-0 right-0 flex items-center justify-center peer-checked:text-white pointer-events-none cursor-pointer">
+                            {{item.label}}
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="w-full h-auto relative">
+            <div class="w-full grid grid-cols-7 bg-orange-500/30 border rounded overflow-hidden">
+                @for (item of data.parent.items; track $index) {
+                    @if($index === 2) {
+                        <div class="w-full h-6 col-span-5"></div>
+                    }
+                    <input placeholder="__" formControlName="{{data.parent.name}}{{item.label}}" type="number" class="w-full h-6 text-center first:col-span-7 last:col-span-7 focus:outline-none px-1 appearance-none">
+                }
+            </div>
+            <div class="w-full h-full flex items-center justify-center absolute top-0 right-0 pointer-events-none">{{data.parent.label}}</div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #boxPadding let-data>
+    <div [formGroup]="form" class="w-full col-span-4 flex flex-wrap text-xs gap-1">
+        <div class="w-full flex items-center justify-between">
+            <span>{{data.parent.label}}</span>
+            <div class="w-auto h-auto flex items-center">
+                @for (item of data.child.options; track $index) {
+                    <div class="w-7 h-6 border first:rounded-l-md last:rounded-r-md last: border-l-0 overflow-hidden relative cursor-pointer">
+                        <input formControlName="{{data.child.name}}" type="radio" [name]="data.child.name" [id]="data.child.name" [value]="item.value" class="w-full h-full cursor-pointer checked:bg-primary-default appearance-none transition-all duration-200 peer">
+                        <div class="w-full h-full absolute top-0 right-0 flex items-center justify-center peer-checked:text-white pointer-events-none cursor-pointer">
+                            {{item.label}}
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="w-full h-auto relative">
+            <div class="w-full grid grid-cols-7 bg-orange-500/30 border rounded overflow-hidden">
+                @for (item of data.parent.items; track $index) {
+                    @if($index === 2) {
+                        <div class="w-full h-6 col-span-5"></div>
+                    }
+                    <input placeholder="__" formControlName="{{data.parent.name}}{{item.label}}" type="number" class="w-full h-6 text-center first:col-span-7 last:col-span-7 focus:outline-none px-1 appearance-none">
+                }
+            </div>
+            <div class="w-full h-full flex items-center justify-center absolute top-0 right-0 pointer-events-none">{{data.parent.label}}</div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #toggle let-data>
+    <div class="w-full col-span-4 flex items-center justify-between text-xs">
+        <div class="w-full flex items-center justify-between">{{data.parent.label}}</div>
+        <div class="w-auto h-auto flex items-center justify-center relative">
+            <input type="checkbox" [name]="data.parent.name" [id]="data.parent.name" class="w-10 h-6 appearance-none border border-gray-200 rounded-full bg-gray-50 cursor-pointer checked:bg-primary-default peer">
+            <label [for]="data.parent.name" class="w-4 h-4 shadow rounded-full bg-white absolute top-1 peer-[:not(:checked)]:left-1 cursor-pointer peer-checked:right-1 transition-all duration-200"></label>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #combinationRadio let-data>
+    <div [formGroup]="form"  class="w-full col-span-4 flex flex-wrap text-xs gap-1">
+        <div class="w-full flex items-center justify-between">{{data.parent.label}}</div>
+        <div class="w-full h-auto flex items-center border rounded-md overflow-hidden">
+            @for (item of data.parent.options; track $index) {
+                <div class="w-full h-6 border-r last:border-r-0 relative cursor-pointer">
+                    <input formControlName="{{data.parent.name}}" type="radio" [name]="data.parent.name" [id]="item.name" [value]="item.value" class="w-full h-full appearance-none checked:bg-primary-default peer cursor-pointer">
+                    <div class="w-full h-full pointer-events-none flex items-center justify-center absolute top-0 right-0 peer-checked:text-white">
+                        {{item.label}}
+                    </div>
+                </div>
+            }
+        </div>
+        @switch (form.get(data.parent.name)?.value) {
+           @case ('color') { <ng-container [ngTemplateOutlet]="colorPicker" [ngTemplateOutletContext]="{$implicit: {parent: data.parent,child:'color'}}"></ng-container> }
+           @case ('image') { <ng-container [ngTemplateOutlet]="imagePicker" [ngTemplateOutletContext]="{$implicit: {parent: data.parent,child:'image'}}"></ng-container> }
+        }
+    </div>
+    
+</ng-template>
+
+<ng-template #colorPicker let-data> 
+    <div [formGroup]="form" class="w-full h-auto flex flex-wrap gap-1">
+        <div class="w-full h-16 border rounded overflow-hidden">
+            <div formControlName="{{data.child}}" [ngStyle]="{backgroundColor: form.get(data.child)?.value}" ngx-colors-trigger class="w-full h-full"></div>
+        </div>
+        <div class="w-full">
+            <input type="text" formControlName="{{data.child}}" class="w-full h-6 px-2 border focus:outline-none">
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #imagePicker let-data>
+    <div [formGroup]="form" class="w-full h-auto flex flex-wrap gap-2">
+        @if(form.get(data.child)?.value) {
+            <div class="w-full h-20 border rounded overflow-hidden flex items-center justify-center cursor-pointer relative">
+                <img (click)="resetControl('image')" [src]="form.get(data.child)?.value" alt="" class="w-full h-full peer">
+                <div class="w-full h-full bg-black/70 hidden peer-hover:flex pointer-events-none items-center justify-center absolute top-0 right-0">
+                    <div class="w-8 h-8 bg-white/70 rounded-full flex items-center justify-center text-red-600">
+                        <i class="fi fi-rr-trash flex"></i>
+                    </div>
+                </div>
+            </div>
+        } @else {
+            <label for="file" class="w-full h-20 border rounded overflow-hidden flex items-center justify-center cursor-pointer">
+                <span class="text-gray-400">Click to upload image</span>
+                <input (change)="onImageChanges($event,data.child)" type="file" name="file" id="file" accept=".jpg,.png" hidden>
+            </label>
+        }
+        
+        <div class="w-full h-0.5 bg-gray-100 relative">
+            <div class="w-full h-full absolute top-0 right-0 flex items-center justify-center">
+                <span class="px-4 bg-white">OR</span>
+            </div>
+        </div>
+        <div class="w-full h-auto">
+            <input placeholder="URL" formControlName="{{data.child}}" type="url" class="w-full h-6 border focus:outline-none px-2">
+        </div>
+    </div>
+</ng-template>

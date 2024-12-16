@@ -1,0 +1,3 @@
+@for (item of buttonList(); track $index) {
+    <button #button [matTooltip]="item.label" matTooltipPosition="above" (click)="selectTab(item.value)" [ngClass]="{'bg-primary-default text-white': selectedButton() === item.value}" [innerHTML]="item.icon | safeHtml" class="w-full h-10 items-center justify-center flex border-r last:border-r-0 transition-all duration-300"></button>
+}

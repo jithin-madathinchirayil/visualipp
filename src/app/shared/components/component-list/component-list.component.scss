@@ -1,0 +1,28 @@
+::ng-deep {
+    .mat-accordion .mat-expansion-panel:last-of-type {
+        border-bottom-right-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }
+    .mat-accordion .mat-expansion-panel:first-of-type {
+        border-radius: 0 !important
+    }
+    .mat-expansion-panel {
+        box-shadow: none !important;
+        border-bottom: 1px solid;
+        border-color: rgb(231, 231, 231);
+        border-radius: 0 !important;
+    }
+    .mat-expansion-panel-spacing {
+        margin: 0 !important;
+    }
+    .mat-expansion-panel-header {
+        padding: 0.5rem !important;
+        height: auto !important;
+        font-size: small !important;
+    }
+    .mat-expansion-panel-body {
+        padding: 0 !important;
+    }
+}

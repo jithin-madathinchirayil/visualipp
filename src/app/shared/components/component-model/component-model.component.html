@@ -1,0 +1,23 @@
+<div class="w-full h-auto flex items-center justify-center gap-0.5">
+    @if (componentData()?.type === 'column') {
+        @for (item of genArray(componentData()?.value || 0); track $index) {
+            <div class="w-4 h-6 border-2 rounded border-gray-500 group-hover:border-secondary-default"></div>
+        }
+    }
+    @if(componentData()?.type === 'text') {
+        <span class="text-2xl" [innerHTML]="componentData()?.icon | safeHtml"></span>
+    }
+    @if(componentData()?.type === 'button') {
+        <span class="text-2xl" [innerHTML]="componentData()?.icon | safeHtml"></span>
+    }
+    @if(componentData()?.type === 'image') {
+        <span class="text-2xl" [innerHTML]="componentData()?.icon | safeHtml"></span>
+    }
+    @if(componentData()?.type === 'link') {
+        <span class="text-2xl" [innerHTML]="componentData()?.icon | safeHtml"></span>
+    }
+    @if(componentData()?.type === 'input') {
+        <span class="text-2xl" [innerHTML]="componentData()?.icon | safeHtml"></span>
+    }
+</div>
+<div class="w-full flex items-center justify-center text-xs">{{componentData()?.name}}</div>

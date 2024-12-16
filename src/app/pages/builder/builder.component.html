@@ -1,0 +1,51 @@
+<app-navbar>
+    <app-logo start></app-logo>
+</app-navbar>
+<div class="w-full h-[calc(100%-4rem)] flex content-start bg-blue-50/20">
+    <div class="w-64 h-full shrink-0">
+        <div class="w-full h-10 flex items-center justify-start px-4 bg-primary-default text-white">
+            <span>Pages</span>
+        </div>
+        @for (item of pageList; track $index) {
+            <app-component-tree draggable="true" [page]="item"></app-component-tree>
+        }
+    </div>
+    <div class="w-full h-full border-x border-gray-100 bg-white flex flex-wrap content-start">
+        <div class="w-full h-10 flex items-center justify-between px-4 bg-primary-default">
+            <span class="font-bold text-white">{{selectedPageSchema().name}}</span>
+            <div class="w-auto h-auto flex items-center gap-4">
+                <div class="w-auto h-auto flex items-center gap-2">
+                    <button (click)="toggleHideElement()" matTooltip="Hide ELement" matTooltipPosition="above" class="h-6 w-6 bg-primary-default text-white flex items-center justify-center">
+                        <i class="fi fi-rr-eye flex"></i>
+                    </button>
+                    <button (click)="toggleEnableBorder()" matTooltip="Toggle Border" matTooltipPosition="above" class="h-6 w-6 bg-primary-default text-white flex items-center justify-center">
+                        <i class="fi fi-rr-square-dashed flex"></i>
+                    </button>
+                </div>
+                <div class="w-auto h-auto flex items-center text-sm shadow">
+                    <button class="bg-white w-10 h-6 text-gray-500 flex items-center justify-center rounded-l-md border-r">
+                        <i class="fi fi-rr-undo flex"></i>
+                    </button>
+                    <button class="bg-white w-10 h-6 text-gray-500 flex items-center justify-center rounded-r-md">
+                        <i class="fi fi-rr-redo flex"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div  class="w-full h-[calc(100%-2.5rem)] relative overflow-y-scroll hide-scrollbar">
+           <app-component-preview (onSelect)="selectedSchema($event)" [hideElement]="hideElement()" [enableBorder]="enableBorder()" [id]="selectedPageSchema().uid ?? '00000'" [parentItem]="selectedPageSchema()"></app-component-preview>
+        </div>
+    </div>
+   
+    <div class="w-64 h-full shrink-0">
+        <app-button-groups [selectedButton]="selectedTab()" [list]="compTabs" (onChange)="onTabChange($event)"></app-button-groups>
+            @switch (selectedTab()) {
+                @case ('component') {
+                   <app-component-properties [selectedComponentSchema]="selectedComponentSchema()"></app-component-properties> 
+                }
+                @case ('layout') {
+                    <app-component-list [items]="layOutList"></app-component-list>
+                }
+            }
+    </div>
+</div>

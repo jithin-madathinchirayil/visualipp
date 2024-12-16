@@ -1,0 +1,12 @@
+@for (item of pageSchema()?.child; track $index) {
+    <app-component-preview (click)="$event.stopImmediatePropagation()" (onSelect)="selectedSchema($event);" [enableBorder]="enableBorder()" [hideElement]="hideElement()" [id]="item.uid" [parentItem]="item"></app-component-preview>
+}
+<!-- <ng-container [ngTemplateOutlet]="placeholder" [ngTemplateOutletContext]="{$implicit:pageSchema()}"></ng-container> -->
+
+<ng-template #placeholder let-data>
+    <div [id]="data.uid" class="w-full h-auto flex items-center justify-center p-4 overlay">
+        <div [id]="data.uid" class="w-full p-4 overlay border border-gray-300 text-gray-500 border-dashed flex items-center h-full justify-center">
+            <span [id]="data.uid" class="overlay">Drag and drop items here</span>
+        </div>
+    </div>
+</ng-template>

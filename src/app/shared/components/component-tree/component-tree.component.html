@@ -1,0 +1,15 @@
+<mat-accordion class="w-full accordion">
+    <mat-expansion-panel [hideToggle]="page()?.child?.length === 0">
+        <mat-expansion-panel-header class="border-b border-gray-100">
+            <div [ngStyle]="{paddingLeft: ''+level()+'rem'}" class="w-full flex items-center justify-between pr-1">
+                <span>{{page()?.name}}</span>
+                <span><i class="fi fi-rr-menu-dots-vertical flex"></i></span>
+            </div>
+        </mat-expansion-panel-header>
+        <div class="w-full h-auto flex flex-wrap bg-white">
+            @for (component of page()?.child; track $index) {
+                <app-component-tree draggable="true" [page]="component" [level]="level()+1"></app-component-tree>
+            }
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>

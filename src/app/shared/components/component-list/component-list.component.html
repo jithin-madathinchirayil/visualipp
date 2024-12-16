@@ -1,0 +1,13 @@
+<mat-accordion class="w-full accordion">
+    @for (item of items(); track $index) {
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>{{item.name}}</mat-expansion-panel-header>
+            <div class="w-full h-auto grid grid-cols-2 p-2 gap-2 bg-white">
+                @for (component of item.items; track $index) {
+                    <app-component-model draggable="true" [data]="component"></app-component-model>
+                }
+            </div>
+        </mat-expansion-panel>
+    }
+    
+</mat-accordion>
