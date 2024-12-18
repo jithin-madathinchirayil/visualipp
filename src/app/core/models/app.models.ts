@@ -10,6 +10,7 @@ export class PageSchema {
     public child: PageSchema[] = [];
     public classList: string[] = [];
     public styleProps: any[] = [];
+    public styleValues: any = {};
     constructor(option: {
         name: string,
         type: string,

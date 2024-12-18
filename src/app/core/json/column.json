@@ -6,8 +6,8 @@
         {"name":"dimensions","label": "Dimensions","type": "group", "items": [
             {"name": "width", "label": "Width", "type": "combo-number","default":100},
             {"name": "height", "label": "Height", "type": "combo-number","default":100},
-            {"name": "autoWidth", "label": "Auto Width", "type": "toggle","default":false},
-            {"name": "autoHeight", "label": "Auto Height", "type": "toggle","default":false},
+            {"name": "autoWidth", "label": "Auto Width", "type": "toggle","default":true},
+            {"name": "autoHeight", "label": "Auto Height", "type": "toggle","default":true},
             {"name": "widthUnit", "label": "Unit","parent":"width", "type": "select","default":"%","options":[
                 {"label": "%", "value": "%"},
                 {"label": "px", "value": "px"}
@@ -38,20 +38,24 @@
             ]}
         ]},
         {"name":"background","label": "Background","type": "group", "items": [
-            {"name": "color", "label": "Color", "type": "color","default":"#ffffff"},
-            {"name": "image", "label": "Image", "type": "image","default":""},
-            {"name": "size", "label": "Size", "type": "select","default":"cover","options":[
+            {"name": "backgroundType", "label": "Background Type", "type": "combination-radio","default":"color","options":[
+                {"label": "Color", "value": "color"},
+                {"label": "Image", "value": "image"}
+            ]},
+            {"name": "backgroundColor", "label": "Color", "type": "color","default":"#ffffff"},
+            {"name": "backgroundImage", "label": "Image", "type": "image","default":null},
+            {"name": "backgroundSize", "label": "Size", "type": "select","default":"cover","options":[
                 {"label": "Cover", "value": "cover"},
                 {"label": "Contain", "value": "contain"},
                 {"label": "Auto", "value": "auto"}
             ]},
-            {"name": "repeat", "label": "Repeat", "type": "select","default":"no-repeat","options":[
+            {"name": "backgroundRepeat", "label": "Repeat", "type": "select","default":"no-repeat","options":[
                 {"label": "No Repeat", "value": "no-repeat"},
                 {"label": "Repeat", "value": "repeat"},
                 {"label": "Repeat X", "value": "repeat-x"},
                 {"label": "Repeat Y", "value": "repeat-y"}
             ]},
-            {"name": "position", "label": "Position", "type": "select","default":"center","options":[
+            {"name": "backgroundPosition", "label": "Position", "type": "select","default":"center","options":[
                 {"label": "Center", "value": "center"},
                 {"label": "Top", "value": "top"},
                 {"label": "Bottom", "value": "bottom"},

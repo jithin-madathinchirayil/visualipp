@@ -82,6 +82,10 @@ export class BuilderComponent implements OnInit, OnDestroy {
     this.pageService.setSelectedPageSchema(e);
   }
 
+  public onPropertiesUpdated(e: any): void {
+    this.selectedComponentSchema.update(() => e);
+  }
+
   ngOnDestroy(): void {
     this.subscriptionList.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
