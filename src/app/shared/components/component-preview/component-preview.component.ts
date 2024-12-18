@@ -48,6 +48,39 @@ export class ComponentPreviewComponent {
   @HostBinding('class') get classListStrings() {
     return this.classList.join(' ');
   }
+  @HostBinding('style.backgroundColor') get backgroundColor() {
+    return this.pageSchema()?.styleValues.backgroundColor ?? 'white';
+  }
+  @HostBinding('style.marginTop') get marginTop() {
+    return this.pageSchema()?.styleValues.marginTop ? this.pageSchema()?.styleValues.marginTop + this.pageSchema()?.styleValues.marginUnit : null;
+  }
+  @HostBinding('style.marginBottom') get marginBottom() {
+    return this.pageSchema()?.styleValues.marginBottom ? this.pageSchema()?.styleValues.marginBottom + this.pageSchema()?.styleValues.marginUnit : null;
+  }
+  @HostBinding('style.marginLeft') get marginLeft() {
+    return this.pageSchema()?.styleValues.marginLeft ? this.pageSchema()?.styleValues.marginLeft + this.pageSchema()?.styleValues.marginUnit : null;
+  }
+  @HostBinding('style.marginRight') get marginRight() {
+    return this.pageSchema()?.styleValues.marginRight ? this.pageSchema()?.styleValues.marginRight + this.pageSchema()?.styleValues.marginUnit : null;
+  }
+  @HostBinding('style.paddingTop') get paddingTop() {
+    return this.pageSchema()?.styleValues.paddingTop ? this.pageSchema()?.styleValues.paddingTop + this.pageSchema()?.styleValues.paddingUnit : null;
+  }
+  @HostBinding('style.paddingBottom') get paddingBottom() {
+    return this.pageSchema()?.styleValues.paddingBottom ? this.pageSchema()?.styleValues.paddingBottom + this.pageSchema()?.styleValues.paddingUnit : null;
+  }
+  @HostBinding('style.paddingLeft') get paddingLeft() {
+    return this.pageSchema()?.styleValues.paddingLeft ? this.pageSchema()?.styleValues.paddingLeft + this.pageSchema()?.styleValues.paddingUnit : null;
+  }
+  @HostBinding('style.paddingRight') get paddingRight() {
+    return this.pageSchema()?.styleValues.paddingRight ? this.pageSchema()?.styleValues.paddingRight + this.pageSchema()?.styleValues.paddingUnit : null;
+  }
+  @HostBinding('style.width') get width() {
+    return this.pageSchema()?.styleValues.autoWidth ? 'auto' : this.pageSchema()?.styleValues.width + this.pageSchema()?.styleValues.widthUnit ;
+  }
+  @HostBinding('style.height') get height() {
+    return this.pageSchema()?.styleValues.autoHeight ? 'auto' : this.pageSchema()?.styleValues.height + this.pageSchema()?.styleValues.heightUnit;
+  }
   private pageService: PageService = inject(PageService);
   public pageSchema: InputSignal<PageSchema | undefined> = input<PageSchema | undefined>(undefined,{alias:"parentItem"});
   public enableBorder: InputSignal<boolean> = input<boolean>(false, {alias:"enableBorder"});
@@ -61,7 +94,7 @@ export class ComponentPreviewComponent {
   private onInputChanges(): void{
     effect(() => {
       if(this.pageSchema()?.type === 'page') {
-        this.classList = ["w-full","h-full","flex","flex-wrap","content-start","bg-white",'cursor-pointer']
+        this.classList = ["w-full","h-full","flex","flex-wrap","content-start",'cursor-pointer']
       }
       if(this.pageSchema()?.type === 'column') {
         this.classList = ["w-full","min-h-32","flex","content-start","relative",'cursor-pointer','p-2','hover:border-secondary-default']

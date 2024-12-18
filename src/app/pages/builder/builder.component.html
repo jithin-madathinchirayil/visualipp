@@ -41,7 +41,7 @@
         <app-button-groups [selectedButton]="selectedTab()" [list]="compTabs" (onChange)="onTabChange($event)"></app-button-groups>
             @switch (selectedTab()) {
                 @case ('component') {
-                   <app-component-properties [selectedComponentSchema]="selectedComponentSchema()"></app-component-properties> 
+                   <app-component-properties (onChanges)="onPropertiesUpdated($event)" [selectedComponentSchema]="selectedComponentSchema()"></app-component-properties>
                 }
                 @case ('layout') {
                     <app-component-list [items]="layOutList"></app-component-list>

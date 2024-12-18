@@ -17,9 +17,9 @@
             ]},
             {"name": "margin", "label": "Margin", "type": "box-margin","default":0,"items":[
                 {"name": "top", "label": "Top", "type": "number","default":0},
+                {"name": "left", "label": "Left", "type": "number","default":0},
                 {"name": "right", "label": "Right", "type": "number","default":0},
-                {"name": "bottom", "label": "Bottom", "type": "number","default":0},
-                {"name": "left", "label": "Left", "type": "number","default":0}
+                {"name": "bottom", "label": "Bottom", "type": "number","default":0}
             ]},
             {"name": "marginUnit", "label": "Margin unit","parent":"margin", "type": "select","default": "%","options":[
                 {"label": "%", "value": "%"},
@@ -28,9 +28,9 @@
             ]},
             {"name": "padding", "label": "Padding", "type": "box-padding","default":0,"items":[
                 {"name": "top", "label": "Top", "type": "number","default":0},
+                {"name": "left", "label": "Left", "type": "number","default":0},
                 {"name": "right", "label": "Right", "type": "number","default":0},
-                {"name": "bottom", "label": "Bottom", "type": "number","default":0},
-                {"name": "left", "label": "Left", "type": "number","default":0}
+                {"name": "bottom", "label": "Bottom", "type": "number","default":0}
             ]},
             {"name": "paddingUnit", "label": "Padding unit", "parent":"padding","type": "select","default": "%","options":[
                 {"label": "%", "value": "%"},
@@ -43,20 +43,20 @@
                 {"label": "Color", "value": "color"},
                 {"label": "Image", "value": "image"}
             ]},
-            {"name": "color", "label": "Color", "type": "color","default":"#ffffff"},
-            {"name": "image", "label": "Image", "type": "image","default":null},
-            {"name": "size", "label": "Size", "type": "select","default":"cover","options":[
+            {"name": "backgroundColor", "label": "Color", "type": "color","default":"#ffffff"},
+            {"name": "backgroundImage", "label": "Image", "type": "image","default":null},
+            {"name": "backgroundSize", "label": "Size", "type": "select","default":"cover","options":[
                 {"label": "Cover", "value": "cover"},
                 {"label": "Contain", "value": "contain"},
                 {"label": "Auto", "value": "auto"}
             ]},
-            {"name": "repeat", "label": "Repeat", "type": "select","default":"no-repeat","options":[
+            {"name": "backgroundRepeat", "label": "Repeat", "type": "select","default":"no-repeat","options":[
                 {"label": "No Repeat", "value": "no-repeat"},
                 {"label": "Repeat", "value": "repeat"},
                 {"label": "Repeat X", "value": "repeat-x"},
                 {"label": "Repeat Y", "value": "repeat-y"}
             ]},
-            {"name": "position", "label": "Position", "type": "select","default":"center","options":[
+            {"name": "backgroundPosition", "label": "Position", "type": "select","default":"center","options":[
                 {"label": "Center", "value": "center"},
                 {"label": "Top", "value": "top"},
                 {"label": "Bottom", "value": "bottom"},

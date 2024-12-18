@@ -1,6 +1,6 @@
 @if(enableView) {
     <mat-accordion class="w-full">
-        @for (item of selectedSchema()?.styleProps; track $index) {
+        @for (item of selectedSchemaShadow?.styleProps; track $index) {
             <mat-expansion-panel>
                 <mat-expansion-panel-header>{{item.label}}</mat-expansion-panel-header>
                 <div class="w-full h-auto grid grid-cols-4 p-2 gap-2 bg-white">
@@ -12,6 +12,7 @@
                                 @case ('box-padding') { <ng-container [ngTemplateOutlet]="boxPadding" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
                                 @case ('toggle') { <ng-container [ngTemplateOutlet]="toggle" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
                                 @case ('combination-radio') { <ng-container [ngTemplateOutlet]="combinationRadio" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
+                                @case ('select') { <ng-container [ngTemplateOutlet]="select" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
                             }
                         } 
                     }
@@ -20,7 +21,6 @@
         }
     </mat-accordion>
 }
-
 
 <ng-template #comboNumber let-data>
     <div [formGroup]="form" class="w-full h-auto flex flex-wrap text-xs col-span-2 gap-0.5">
@@ -98,12 +98,14 @@
 </ng-template>
 
 <ng-template #toggle let-data>
-    <div class="w-full col-span-4 flex items-center justify-between text-xs">
+    <div [formGroup]="form" class="w-full col-span-4 flex items-center justify-between text-xs">
         <div class="w-full flex items-center justify-between">{{data.parent.label}}</div>
-        <div class="w-auto h-auto flex items-center justify-center relative">
-            <input type="checkbox" [name]="data.parent.name" [id]="data.parent.name" class="w-10 h-6 appearance-none border border-gray-200 rounded-full bg-gray-50 cursor-pointer checked:bg-primary-default peer">
-            <label [for]="data.parent.name" class="w-4 h-4 shadow rounded-full bg-white absolute top-1 peer-[:not(:checked)]:left-1 cursor-pointer peer-checked:right-1 transition-all duration-200"></label>
-        </div>
+        @if(haveControl(data.parent.name)) {
+            <div class="w-auto h-auto flex items-center justify-center relative">
+                <input [formControlName]="data.parent.name" [value]="data.parent.default" type="checkbox" [name]="data.parent.name" [id]="data.parent.name" class="w-10 h-6 appearance-none border border-gray-200 rounded-full bg-gray-50 cursor-pointer checked:bg-primary-default peer">
+                <label [for]="data.parent.name" class="w-4 h-4 shadow rounded-full bg-white absolute top-1 peer-[:not(:checked)]:left-1 cursor-pointer peer-checked:right-1 transition-all duration-200"></label>
+            </div>
+        }
     </div>
 </ng-template>
 
@@ -121,8 +123,8 @@
             }
         </div>
         @switch (form.get(data.parent.name)?.value) {
-           @case ('color') { <ng-container [ngTemplateOutlet]="colorPicker" [ngTemplateOutletContext]="{$implicit: {parent: data.parent,child:'color'}}"></ng-container> }
-           @case ('image') { <ng-container [ngTemplateOutlet]="imagePicker" [ngTemplateOutletContext]="{$implicit: {parent: data.parent,child:'image'}}"></ng-container> }
+           @case ('color') { <ng-container [ngTemplateOutlet]="colorPicker" [ngTemplateOutletContext]="{$implicit: {parent: data.parent,child:'backgroundColor'}}"></ng-container> }
+           @case ('image') { <ng-container [ngTemplateOutlet]="imagePicker" [ngTemplateOutletContext]="{$implicit: {parent: data.parent,child:'backgroundImage'}}"></ng-container> }
         }
     </div>
     
@@ -164,6 +166,19 @@
         </div>
         <div class="w-full h-auto">
             <input placeholder="URL" formControlName="{{data.child}}" type="url" class="w-full h-6 border focus:outline-none px-2">
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #select let-data>
+    <div [formGroup]="form" class="w-full col-span-4 flex flex-wrap text-xs gap-1">
+        <div class="w-full flex items-center justify-between">{{data.parent.label}}</div>
+        <div class="w-full h-auto">
+            <select formControlName="{{data.parent.name}}" [name]="data.parent.name" [id]="data.parent.name" class="w-full h-6 px-2 border focus:outline-none">
+                @for (item of data.parent.options; track $index) {
+                    <option [value]="item.value">{{item.label}}</option>
+                }
+            </select>
         </div>
     </div>
 </ng-template>
