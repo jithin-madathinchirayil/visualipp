@@ -6,13 +6,24 @@
         <div class="w-full h-10 flex items-center justify-start px-4 bg-primary-default text-white">
             <span>Pages</span>
         </div>
-        @for (item of pageList; track $index) {
-            <app-component-tree draggable="true" [page]="item"></app-component-tree>
-        }
+        <div class="w-full h-[calc(100dvh-9rem)] flex flex-wrap content-start overflow-y-scroll hide-scrollbar">
+            @for (item of pageList; track $index) {
+                <app-component-tree draggable="true" [page]="item"></app-component-tree>
+            }
+        </div>
+        <div class="w-full">
+            <button (click)="addNewPage()" class="w-full h-10 bg-primary-default text-white text-sm font-semibold flex items-center justify-center gap-2">
+                <i class="fi fi-rr-square-plus flex"></i>
+                <span>Add new page</span>
+            </button>
+        </div>
     </div>
     <div class="w-full h-full border-x border-gray-100 bg-white flex flex-wrap content-start">
         <div class="w-full h-10 flex items-center justify-between px-4 bg-primary-default">
-            <span class="font-bold text-white">{{selectedPageSchema().name}}</span>
+            <div class="w-auto h-auto flex items-center text-white gap-2">
+                <span class="font-bold">{{selectedPageSchema().name}}</span>
+                <span><i class="fi fi-rr-edit flex cursor-pointer"></i></span>
+            </div>
             <div class="w-auto h-auto flex items-center gap-4">
                 <div class="w-auto h-auto flex items-center gap-2">
                     <button (click)="toggleHideElement()" matTooltip="Hide ELement" matTooltipPosition="above" class="h-6 w-6 bg-primary-default text-white flex items-center justify-center">
