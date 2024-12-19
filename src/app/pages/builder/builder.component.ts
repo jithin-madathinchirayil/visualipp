@@ -86,6 +86,16 @@ export class BuilderComponent implements OnInit, OnDestroy {
     this.selectedComponentSchema.update(() => e);
   }
 
+  public addNewPage(): void {
+    const page: PageSchema = new PageSchema({
+      name: `Page ${this.pageList.length + 1}`,
+      type: 'page',
+      child: []
+    });
+    this.pageList.push(page);
+    this.pageService.setSelectedPageSchema(page);
+  }
+
   ngOnDestroy(): void {
     this.subscriptionList.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
