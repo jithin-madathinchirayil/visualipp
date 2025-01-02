@@ -20,6 +20,46 @@ export class PageService {
     }
     return schemaList;
   }
+
+  public getButtonSchema(): PageSchema {
+    return new PageSchema({
+      name: 'button',
+      type: 'button',
+      child:[]
+    })
+  }
+
+  public getTextSchema(): PageSchema {
+    return new PageSchema({
+      name: 'text',
+      type: 'text',
+      child:[]
+    })
+  }
+
+  public getInputSchema(): PageSchema {
+    return new PageSchema({
+      name: 'input',
+      type: 'input',
+      child:[]
+    })
+  }
+
+  public getImageSchema(): PageSchema {
+    return new PageSchema({
+      name: 'image',
+      type: 'image',
+      child: []
+    })
+  }
+
+  public getLinkSchema(): PageSchema {
+    return new PageSchema({
+      name: 'link',
+      type: 'link',
+      child: []
+    })
+  }
   
   public setSelectedPageSchema(schema: PageSchema): void {
     this.pageProperties.next(schema);
