@@ -2,6 +2,7 @@ import { STYLE_DEFAULTS } from '@core/config/app.const';
 import { v4 as uuidv4 } from 'uuid';
 import pageData from '@core/json/page.json';
 import columnData from '@core/json/column.json';
+import buttonData from '@core/json/button.json';
 
 export class PageSchema {
     public name: string | undefined;
@@ -27,6 +28,8 @@ export class PageSchema {
             case 'page': this.styleProps = pageData.styleProps;
             break;
             case 'column': this.styleProps = columnData.styleProps;
+            break;
+            case 'button': this.styleProps = buttonData.styleProps;
             break;
         }
     }

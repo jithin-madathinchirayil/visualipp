@@ -66,6 +66,21 @@ export class ComponentPreviewComponent {
       if(this.pageSchema()?.type === 'column') {
         this.classList = ["w-full","min-h-32","flex","content-start","relative",'cursor-pointer','p-2','hover:border-secondary-default']
       }
+      if (this.pageSchema()?.type === 'button') {
+        this.classList = ["w-full", "min-h-32", "flex", "content-start", "relative", 'cursor-pointer', 'p-2', 'hover:border-secondary-default','bg-red-400']
+      }
+      if (this.pageSchema()?.type === 'text') {
+        this.classList = ["w-full", "min-h-10", "border", "border-gray-300", "rounded", "p-2", "focus:outline-none", "focus:ring-2", "focus:ring-blue-500"]
+      }
+      if (this.pageSchema()?.type === 'input') {
+        this.classList = ["w-full", "min-h-10", "border", "border-gray-300", "rounded", "p-2", "focus:outline-none", "focus:ring-2", "focus:ring-blue-500"]
+      }
+      if (this.pageSchema()?.type === 'image') {
+        this.classList = ["w-full", "min-h-10", "border", "border-gray-300", "rounded", "p-2", "focus:outline-none", "focus:ring-2", "focus:ring-blue-500"]
+      }
+      if (this.pageSchema()?.type === 'link') {
+        this.classList = ["w-full", "min-h-10", "border", "border-gray-300", "rounded", "p-2", "focus:outline-none", "focus:ring-2", "focus:ring-blue-500"]
+      }
       if(this.enableBorder()) {
         this.classList.push("border","border-dashed");
       } else {
@@ -84,7 +99,17 @@ export class ComponentPreviewComponent {
       case 'column': this.pageService.getColumnSchema(item.value as number).forEach((item: PageSchema) => {
         this.pageSchema()?.child?.push(item);
       });
-      break;
+        break;
+      case 'button': this.pageSchema()?.child?.push(this.pageService.getButtonSchema());
+        break;
+      case 'text': this.pageSchema()?.child?.push(this.pageService.getTextSchema());
+        break;
+      case 'input': this.pageSchema()?.child?.push(this.pageService.getInputSchema());
+        break;
+      case 'image': this.pageSchema()?.child?.push(this.pageService.getImageSchema());
+        break;
+      case 'link': this.pageSchema()?.child?.push(this.pageService.getLinkSchema());
+        break;
     };
   }
 
