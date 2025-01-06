@@ -30,7 +30,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 export class ComponentPropertiesComponent implements OnDestroy {
   private utilityService: UtilityService = inject(UtilityService);
   public selectedSchema: InputSignal<PageSchema | undefined> = input<PageSchema | undefined>(undefined,{alias:"selectedComponentSchema"});
-  public onChanges: OutputEmitterRef<any> = output<string>({alias:'onChanges'});
+  public onChanges: OutputEmitterRef<PageSchema | undefined> = output<PageSchema | undefined>({alias:'onChanges'});
   public form: FormGroup = new FormGroup({
     test: new FormControl('')
   });
@@ -75,12 +75,15 @@ export class ComponentPropertiesComponent implements OnDestroy {
     }
     this.form = tempForm;
     this.onFormChange();
+    this.selectedSchemaShadow!.styleValues = this.form.value;
+      this.onChanges.emit(this.selectedSchemaShadow);
     return;
   }
 
   private onFormChange(): void {
     this.subscriptionList.push(this.form.valueChanges.pipe(debounceTime(200)).subscribe((value: any) => {
       this.selectedSchemaShadow!.styleValues = value;
+      this.onChanges.emit(this.selectedSchemaShadow);
     }));
   }
 

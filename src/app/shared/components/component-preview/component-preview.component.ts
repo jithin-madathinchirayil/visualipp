@@ -1,6 +1,6 @@
 import { CdkDropList } from '@angular/cdk/drag-drop';
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, effect, HostBinding, HostListener, inject, input, InputSignal, output } from '@angular/core';
+import { Component, effect, EffectCleanupRegisterFn, HostBinding, HostListener, inject, input, InputSignal, output } from '@angular/core';
 import { PageSchema } from '@core/models/app.models';
 import { PageService } from '@core/services/page.service';
 import { LayoutColumn } from '@core/types/app.types';
@@ -85,14 +85,14 @@ export class ComponentPreviewComponent {
   public pageSchema: InputSignal<PageSchema | undefined> = input<PageSchema | undefined>(undefined,{alias:"parentItem"});
   public enableBorder: InputSignal<boolean> = input<boolean>(false, {alias:"enableBorder"});
   public hideElement: InputSignal<boolean> = input<boolean>(false, {alias:"hideElement"});
-  public onSelect = output<PageSchema | undefined>({alias:'onSelect'})
+  public onSelect = output<PageSchema | undefined>({alias:'onSelect'});
   private classList: string[] = [];
   constructor(){
     this.onInputChanges();
   }
 
   private onInputChanges(): void{
-    effect(() => {
+    effect((e: EffectCleanupRegisterFn) => {
       if(this.pageSchema()?.type === 'page') {
         this.classList = ["w-full","h-full","flex","flex-wrap","content-start",'cursor-pointer']
       }
@@ -100,7 +100,7 @@ export class ComponentPreviewComponent {
         this.classList = ["w-full","min-h-32","flex","content-start","relative",'cursor-pointer','p-2','hover:border-secondary-default']
       }
       if (this.pageSchema()?.type === 'button') {
-        this.classList = ["w-full", "min-h-32", "flex", "content-start", "relative", 'cursor-pointer', 'p-2', 'hover:border-secondary-default','bg-red-400']
+        this.classList = ["flex","border", "border-gray-300","border-dashed", "relative", 'cursor-pointer', 'hover:border-secondary-default'];
       }
       if (this.pageSchema()?.type === 'text') {
         this.classList = ["w-full", "min-h-10", "border", "border-gray-300", "rounded", "p-2", "focus:outline-none", "focus:ring-2", "focus:ring-blue-500"]
@@ -146,6 +146,16 @@ export class ComponentPreviewComponent {
     };
   }
 
+  get valueProperty(): unknown {
+    let value: unknown;
+    const valueList: any = this.pageSchema()?.styleProps.find((item: any) => item.name === 'value');
+    if(!valueList) return;
+    value = valueList.items.find((item: any) => item.name === 'buttonValue')?.default;
+    if(!this.pageSchema()?.styleValues.buttonValue) return value;
+    value = this.pageSchema()?.styleValues.buttonValue;
+    return value;
+  }
+ 
   public selectedSchema(e: PageSchema | undefined): void {
     if(!e) return;
     this.pageService.setSelectedPageSchema(e);
