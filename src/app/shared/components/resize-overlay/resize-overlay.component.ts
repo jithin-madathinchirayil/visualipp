@@ -29,7 +29,6 @@ export class ResizeOverlayComponent implements AfterViewInit {
     const move = (ev: PointerEvent) => {
       const newLeft = el.offsetLeft + ev.movementX;
       const containerRect = el.parentElement?.getBoundingClientRect();
-      console.log(el.parentElement);
       if (containerRect) {
         const maxLeft = containerRect.right - el.offsetWidth;
         const minLeft = containerRect.left;

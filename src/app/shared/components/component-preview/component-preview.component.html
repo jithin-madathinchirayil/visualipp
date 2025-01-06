@@ -1,3 +1,4 @@
+{{valueProperty}}
 @for (item of pageSchema()?.child; track $index) {
     <app-component-preview (click)="$event.stopImmediatePropagation()" (onSelect)="selectedSchema($event);" [enableBorder]="enableBorder()" [hideElement]="hideElement()" [id]="item.uid" [parentItem]="item"></app-component-preview>
 }

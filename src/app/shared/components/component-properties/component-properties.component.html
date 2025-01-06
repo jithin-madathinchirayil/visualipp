@@ -13,6 +13,7 @@
                                 @case ('toggle') { <ng-container [ngTemplateOutlet]="toggle" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
                                 @case ('combination-radio') { <ng-container [ngTemplateOutlet]="combinationRadio" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
                                 @case ('select') { <ng-container [ngTemplateOutlet]="select" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
+                                @case ('inline-text') { <ng-container [ngTemplateOutlet]="inlineText" [ngTemplateOutletContext]="{$implicit: {parent: child,child: item.items | childFinder:child.name}}"></ng-container> }
                             }
                         } 
                     }
@@ -171,7 +172,7 @@
 </ng-template>
 
 <ng-template #select let-data>
-    <div [formGroup]="form" class="w-full col-span-4 flex flex-wrap text-xs gap-1">
+    <div [formGroup]="form" class="w-full col-span-2 flex flex-wrap text-xs gap-1">
         <div class="w-full flex items-center justify-between">{{data.parent.label}}</div>
         <div class="w-full h-auto">
             <select formControlName="{{data.parent.name}}" [name]="data.parent.name" [id]="data.parent.name" class="w-full h-6 px-2 border focus:outline-none">
@@ -179,6 +180,17 @@
                     <option [value]="item.value">{{item.label}}</option>
                 }
             </select>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #inlineText let-data>
+    <div [formGroup]="form" class="w-full h-auto flex flex-wrap text-xs col-span-4 gap-0.5">
+        <div class="w-full flex items-center justify-between">
+            <span>{{data.parent.label}}</span>
+        </div>
+        <div class="w-full h-auto flex items-center border">
+            <input type="text" formControlName="{{data.parent.name}}" class="w-full h-6 focus:outline-none px-1 appearance-none">
         </div>
     </div>
 </ng-template>

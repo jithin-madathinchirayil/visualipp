@@ -1,10 +1,7 @@
-import { CdkDrag, CdkDragDrop, CdkDragEnter, CdkDropList, CdkDropListGroup, copyArrayItem } from '@angular/cdk/drag-drop';
-import { NgClass } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { COMP_TABS, LAYOUT_ITEMS } from '@core/config/app.const';
 import { PageSchema } from '@core/models/app.models';
-import { SafeHtmlPipe } from '@core/pipes/safe-html.pipe';
 import { PageService } from '@core/services/page.service';
 import { ButtonGroupItem, Layout, LayoutColumn } from '@core/types/app.types';
 import { ButtonGroupsComponent } from '@shared/components/button-groups/button-groups.component';
@@ -78,12 +75,15 @@ export class BuilderComponent implements OnInit, OnDestroy {
   }
 
   public selectedSchema(e: PageSchema | undefined): void {
+    console.log(e)
     if(!e) return;
     this.pageService.setSelectedPageSchema(e);
   }
 
   public onPropertiesUpdated(e: any): void {
-    this.selectedComponentSchema.update(() => e);
+    this.selectedComponentSchema.set(e);
+    const destructuredValue: PageSchema = {...this.selectedPageSchema()} as PageSchema;
+    this.selectedPageSchema.update(() => destructuredValue)
   }
 
   public addNewPage(): void {
