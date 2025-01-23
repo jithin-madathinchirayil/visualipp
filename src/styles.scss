@@ -40,7 +40,6 @@ $code-x-theme: mat.define-theme((
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
 * {
     font-family: "Nunito Sans", serif;
 }
@@ -71,6 +70,5 @@ input[type=number] {
 .active {
   background-color: #e0f7f9 !important;
 }
-
 
 

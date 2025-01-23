@@ -11,6 +11,6 @@ export const routes: Routes = [
     },
     {
         path: 'builder',
-        loadComponent: () => import('@pages/builder/builder.component').then(m => m.BuilderComponent)
+        loadComponent: () => import('@pages/builder-alt/builder-alt.component').then(m => m.BuilderAltComponent)
     }
 ];

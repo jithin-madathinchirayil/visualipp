@@ -1,0 +1,26 @@
+<div [ngClass]="{'left-4': depth === 0,'left-0': depth !== 0}" class="w-3 h-0.5 bg-primary-default absolute top-3 rounded-r-full"></div>
+<div [ngClass]="{
+    'firstMainTreeWithOutEnable': FirstMainTreeWithOutEnable,
+    'firstMainTreeWithEnable': FirstMainTreeWithEnable,
+    'firstChildTreeWithOutEnable': FirstChildTreeWithOutEnable,
+    'firstChildTreeWithEnable': FirstChildTreeWithEnable,
+    'mainTreeWithOutEnable': mainTreeWithOutEnable,
+    'mainTreeWithEnable': mainTreeWithEnable,
+    'childTreeWithOutEnable': childTreeWithOutEnable,
+    'childTreeWithEnable': childTreeWithEnable,
+    'lastMainTreeWithOutEnable': LastMainTreeWithOutEnable,
+    'lastMainTreeWithEnable': LastMainTreeWithEnable,
+    'lastChildTreeWithOutEnable': LastChildTreeWithOutEnable,
+    'lastChildTreeWithEnable': LastChildTreeWithEnable,
+    }" class="w-0.5 bg-primary-default absolute  rounded-r-full"></div>
+<div class="w-full flex items-center justify-between">
+    <span>{{page?.name}}</span>
+    @if(page && page.child.length > 0) {
+        <mat-icon fontSet="material-icons-round" class="text-primary-default/50">{{ enableChild ? 'expand_less' : 'chevron_right'}}</mat-icon>
+    }
+</div>
+@if(page && page.child.length > 0 && enableChild) {
+    @for (item of page.child; track $index) {
+        <app-tree-element [page]="item" [order]="$index" [total]="page.child.length" [depth]="depth+1"></app-tree-element>
+    }
+}

@@ -1,0 +1,71 @@
+.firstMainTreeWithOutEnable {
+    height: 50%;
+    top: 50%;
+    left: 1rem;
+}
+
+.firstMainTreeWithEnable {
+    height: calc(100% - 0.5rem);
+    top: 0.9rem;
+    left: 1rem;
+}
+
+.firstChildTreeWithOutEnable {
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.firstChildTreeWithEnable {
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.lastMainTreeWithOutEnable {
+    height: 50%;
+    bottom: 50%;
+    left: 1rem;
+}
+
+.lastMainTreeWithEnable {
+    height: 0.9rem;
+    top: 0;
+    left: 1rem;
+}
+
+.lastChildTreeWithOutEnable {
+    height: 50%;
+    bottom: 50%;
+    left: 0;
+}
+
+.lastChildTreeWithEnable {
+    height: 0.9rem;
+    top: 0;
+    left: 0;
+}
+
+.mainTreeWithOutEnable {
+    height: 100%;
+    bottom: 0;
+    left: 1rem;
+}
+
+.mainTreeWithEnable {
+    height: 100%;
+    bottom: 0;
+    left: 1rem;
+}
+
+.childTreeWithOutEnable {
+    height: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.childTreeWithEnable {
+    height: 100%;
+    bottom: 0;
+    left: 0;
+}

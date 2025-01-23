@@ -1,6 +1,6 @@
 @if(enableView) {
     <mat-accordion class="w-full">
-        @for (item of selectedSchemaShadow?.styleProps; track $index) {
+        @for (item of selectedComponentSchema?.styleProps; track $index) {
             <mat-expansion-panel>
                 <mat-expansion-panel-header>{{item.label}}</mat-expansion-panel-header>
                 <div class="w-full h-auto grid grid-cols-4 p-2 gap-2 bg-white">

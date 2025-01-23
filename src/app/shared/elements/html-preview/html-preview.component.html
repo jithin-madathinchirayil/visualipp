@@ -1,0 +1,5 @@
+@if(page && page.child.length > 0) {
+    @for (item of page.child; track $index) {
+        <app-html-preview [id]="item.uid" [page]="item"></app-html-preview>
+    }
+}

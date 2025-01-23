@@ -1,0 +1,100 @@
+<app-navbar class="shadow">
+    <div class="w-auto h-auto flex items-center gap-4" start>
+        <button (click)="toggleSidebar()" class="flex">
+            <mat-icon fontSet="material-icons-round">menu</mat-icon>
+        </button>
+        <app-logo></app-logo>
+    </div>
+    <div class="w-auto h-auto flex items-center gap-6" end>
+        <button [ngClass]="{'bg-primary-default text-white': enableLayouts}" (click)="toggleLayout()" class="w-auto h-auto flex items-center justify-center text-primary-default gap-2 font-medium hover:bg-primary-default hover:text-white px-2 py-1 rounded-full transition-all duration-200">
+            <mat-icon fontSet="material-icons-round">layers</mat-icon>
+            <span>Layouts</span>
+        </button>
+        <button [ngClass]="{'bg-primary-default text-white': enableProperties}" (click)="toggleProperties()" class="w-auto h-auto flex items-center justify-center text-primary-default gap-2 font-medium hover:bg-primary-default hover:text-white px-2 py-1 rounded-full transition-all duration-200">
+            <mat-icon fontSet="material-icons-round">dns</mat-icon>
+            <span>Properties</span>
+        </button>
+        <button class="w-auto h-auto flex items-center justify-center text-primary-default gap-2 font-medium hover:bg-primary-default hover:text-white px-2 py-1 rounded-full transition-all duration-200">
+            <mat-icon fontSet="material-icons-round">settings</mat-icon>
+            <span>Project settings</span>
+        </button>
+        <button [matMenuTriggerFor]="profileMenu" class="w-auto h-auto flex gap-2">
+            <div class="max-w-48 flex flex-wrap">
+                <div class="w-full text-end truncate">Jithin madathinchirayil</div>
+                <div class="w-full text-end font-thin text-sm truncate">jithin.madathinchirayil&#64;vensure.com</div>
+            </div>
+            <div class="w-12 h-12 shrink-0 bg-primary-default/10 rounded-full"></div>
+        </button>
+    </div>
+</app-navbar>
+
+<div class="w-full h-[calc(100%-4rem)] flex content-start p-2 gap-2">
+    <div [ngClass]="{'w-20': enableSidebar,'w-0':!enableSidebar}" class=" shrink-0 h-full bg-blue-200 transition-all duration-200"></div>
+    <div  [ngClass]="{'w-64': enableLayouts,'w-0':!enableLayouts}" class="w-64 shrink-0 h-full transition-all duration-200 overflow-hidden">
+        <div class="w-full h-full bg-white shadow rounded-md flex flex-wrap content-start overflow-hidden">
+           <div class="w-full h-auto p-2">
+            <div class="w-full h-10 flex gap-2 border p-1 rounded-full text-xs font-extrabold relative text-primary-default">
+                <div [ngClass]="{'translate-x-0': selectedTab === 'layout','translate-x-[calc(100%-0.5rem)] ': selectedTab === 'elements'}" class="w-6/12 h-7 rounded-full top-1 left-1 bg-primary-default absolute transition-all duration-200"></div>
+                    <button (click)="setTab('layout')" [ngClass]="{'text-white': selectedTab === 'layout'}" class="w-full h-full rounded-full relative z-10">LAYOUT</button>
+                    <button (click)="setTab('elements')" [ngClass]="{'text-white': selectedTab === 'elements'}" class="w-full h-full rounded-full relative z-10">ELEMENTS</button>
+               </div>
+           </div>
+           @if(selectedTab === 'layout') {
+                <div class="w-full h-[calc(100%-6.5rem)]">
+                    @for (item of pageList | async; track $index) {
+                        <app-tree-element (click)="onPageSelect(item,$event)" [page]="item" [order]="$index" [total]="(pageList | async)?.length" [depth]="0"></app-tree-element>
+                    }
+                </div>
+                <button (click)="addNewPage()" class="w-full h-12 bg-primary-default text-white flex items-center justify-center gap-2 text-sm font-bold">
+                        <mat-icon fontSet="material-icons-round">add</mat-icon>
+                        <span>Add new Page</span>
+                </button>
+           } @else {
+                <div class="w-full h-[calc(100%-3.5rem)] grid grid-cols-2 gap-4 p-2 content-start">
+                    @for (item of elementList | async; track $index) {
+                        <app-html-element draggable="true" [data]="item"></app-html-element>
+                    }
+                </div>
+           }
+        </div>
+    </div>
+    <div class="w-full h-ful">
+        <div class="w-full h-full flex flex-wrap content-start border rounded-md overflow-hidden">
+            <div class="w-full h-12 bg-primary-default flex items-center justify-between px-4 text-white">
+                <div class="w-auto flex items-center gap-2">
+                    <input type="text" [formControl]="selectedPageName" name="name" id="name" class="w-auto bg-transparent focus:outline-none transition-all duration-200">
+                </div>
+            </div>
+            <app-html-preview  [id]="selectedPage?.uid" [computedStyle]="selectedPage?.computedStyles" [page]="selectedPage"></app-html-preview>
+        </div>
+    </div>
+    <div  [ngClass]="{'w-64': enableProperties,'w-0':!enableProperties}" class="w-64 shrink-0 h-full transition-all duration-200 overflow-hidden">
+        <div class="w-full h-full bg-white shadow rounded-md flex flex-wrap content-start overflow-hidden">
+            <div class="w-full h-12 px-4 flex items-center justify-center font-extrabold text-primary-default bg-primary-default/20 text-xs">
+                PROPERTIES
+            </div>
+            <div class="w-full h-full overflow-y-scroll hide-scrollbar flex flex-wrap content-start">
+                @for (item of selectedPage?.controlProps; track $index) {
+                    <app-html-property (onPropertyChange)="onPropertyChange($event)" [computedStyle]="selectedPage?.computedStyles" [property]="item"></app-html-property>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<mat-menu #profileMenu="matMenu" class="absolute right-2 top-4 bg-white rounded-md overflow-hidden text-primary-default">
+    <button class="w-full h-10 flex items-center justify-start hover:bg-primary-default/10 px-2 gap-2">
+        <mat-icon fontSet="material-icons-round">person</mat-icon>
+        <span>Profile settings</span>
+    </button>
+    <button class="w-full h-10 flex items-center justify-start hover:bg-primary-default/10 px-2 gap-2">
+        <mat-icon fontSet="material-icons-round">card_membership</mat-icon>
+        <span>Subscriptions</span>
+    </button>
+    <button class="w-full h-10 flex items-center justify-start hover:bg-primary-default/10 px-2 gap-2">
+        <mat-icon fontSet="material-icons-round">logout</mat-icon>
+        <span>Logout</span>
+    </button>
+</mat-menu>

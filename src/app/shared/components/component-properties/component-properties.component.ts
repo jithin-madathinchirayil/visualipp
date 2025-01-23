@@ -1,5 +1,5 @@
 import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { Component, effect, inject, input, InputSignal, OnDestroy, output, OutputEmitterRef } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, input, InputSignal, OnChanges, OnDestroy, Output, output, OutputEmitterRef, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PageSchema } from '@core/models/app.models';
@@ -27,28 +27,18 @@ import { Subscription } from 'rxjs/internal/Subscription';
     class: 'w-full flex flex-wrap'
   }
 })
-export class ComponentPropertiesComponent implements OnDestroy {
+export class ComponentPropertiesComponent implements OnChanges, OnDestroy {
+  @Input() selectedComponentSchema: PageSchema | undefined;
+  @Output() onChanges: EventEmitter<PageSchema> = new EventEmitter<PageSchema>(true);
   private utilityService: UtilityService = inject(UtilityService);
-  public selectedSchema: InputSignal<PageSchema | undefined> = input<PageSchema | undefined>(undefined,{alias:"selectedComponentSchema"});
-  public onChanges: OutputEmitterRef<PageSchema | undefined> = output<PageSchema | undefined>({alias:'onChanges'});
-  public form: FormGroup = new FormGroup({
-    test: new FormControl('')
-  });
+  public form: FormGroup = new FormGroup({});
   public enableView: boolean = false;
-  public selectedSchemaShadow: PageSchema | undefined;
   private subscriptionList: Subscription[] = [];
 
-  constructor() {
-    this.onInputChanges();
-  }
-
-  private onInputChanges(): void {
-    effect(async () => {
-      this.enableView = false;
-      this.selectedSchemaShadow = this.selectedSchema();
-      await this.generateForm(this.selectedSchemaShadow?.styleProps);
-      this.enableView = true;
-    },{allowSignalWrites: true});
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['selectedComponentSchema']?.currentValue) {
+      this.generateForm(this.selectedComponentSchema?.styleProps);
+    }    
   }
 
   private async generateForm(fieldSets: any[] | undefined): Promise<void> {
@@ -58,15 +48,15 @@ export class ComponentPropertiesComponent implements OnDestroy {
       for(const child of parent.items) {
         if(child.type === 'box-margin' || child.type === 'box-padding') {
           for(const childItem of child.items) {
-            if(this.selectedSchemaShadow?.styleValues && this.selectedSchemaShadow?.styleValues[child.name+childItem.label]) {
-              tempForm.addControl(child.name+childItem.label, new FormControl(this.selectedSchemaShadow?.styleValues[child.name+childItem.label]));
+            if(this.selectedComponentSchema?.styleValues && this.selectedComponentSchema?.styleValues[child.name+childItem.label]) {
+              tempForm.addControl(child.name+childItem.label, new FormControl(this.selectedComponentSchema?.styleValues[child.name+childItem.label]));
             } else {
               tempForm.addControl(child.name+childItem.label, new FormControl(childItem.default));
             }
           }
         } else  {
-          if(this.selectedSchemaShadow?.styleValues && this.selectedSchemaShadow?.styleValues[child.name]) {
-            tempForm.addControl(child.name, new FormControl(this.selectedSchemaShadow?.styleValues[child.name]));
+          if(this.selectedComponentSchema?.styleValues && this.selectedComponentSchema?.styleValues[child.name]) {
+            tempForm.addControl(child.name, new FormControl(this.selectedComponentSchema?.styleValues[child.name]));
           } else {
             tempForm.addControl(child.name, new FormControl(child.default));
           }
@@ -75,15 +65,16 @@ export class ComponentPropertiesComponent implements OnDestroy {
     }
     this.form = tempForm;
     this.onFormChange();
-    this.selectedSchemaShadow!.styleValues = this.form.value;
-      this.onChanges.emit(this.selectedSchemaShadow);
+    this.selectedComponentSchema!.styleValues = this.form.value;
+    this.enableView = true;
+    this.onChanges.emit(this.selectedComponentSchema);
     return;
   }
 
   private onFormChange(): void {
     this.subscriptionList.push(this.form.valueChanges.pipe(debounceTime(200)).subscribe((value: any) => {
-      this.selectedSchemaShadow!.styleValues = value;
-      this.onChanges.emit(this.selectedSchemaShadow);
+      this.selectedComponentSchema!.styleValues = value;
+      this.onChanges.emit(this.selectedComponentSchema);
     }));
   }
 

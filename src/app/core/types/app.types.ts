@@ -1,3 +1,5 @@
+import { IObject } from "@core/interfaces/app.interface";
+
 export type ButtonGroupItem = {
     label?: string;
     value: string;
@@ -21,3 +23,7 @@ export type Layout = {
     type: string;
     child: Layout[];
 }
+
+export type PageTypes = 'section' | 'div' | 'button' | 'buttonGroup' | 'column' | 'layout' | 'text';
+
+export type GenericObject = IObject;

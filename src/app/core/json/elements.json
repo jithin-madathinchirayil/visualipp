@@ -1,0 +1,32 @@
+[
+    {
+        "name":"Container",
+        "type":"column",
+        "icon":"check_box_outline_blank"
+    },
+    {
+        "name":"Button",
+        "type":"button",
+        "icon":"gamepad"
+    },
+    {
+        "name":"Input",
+        "type":"input",
+        "icon":"calendar_view_day"
+    },
+    {
+        "name":"Image",
+        "type":"image",
+        "icon":"image"
+    },
+    {
+        "name":"Heading",
+        "type":"heading",
+        "icon":"title"
+    },
+    {
+        "name":"Text",
+        "type":"heading",
+        "icon":"segment"
+    }
+]
